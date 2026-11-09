@@ -1,0 +1,9 @@
+<TodoListCard defaultExpanded="true" onTodoClick="selectTodo">
+  <dimmedTodoIds>
+    <id>todo-3</id>
+  </dimmedTodoIds>
+  <todos>
+    <todo id="todo-1" content="Ship the canvas" status="completed"/>
+    <todo id="todo-3" content="Wait for review" status="pending"/>
+  </todos>
+</TodoListCard>

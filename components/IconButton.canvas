@@ -1,0 +1,1 @@
+<IconButton onClick="remove" disabled="false" title="Delete" variant="circle" size="sm">✕</IconButton>

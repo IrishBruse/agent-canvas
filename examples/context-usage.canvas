@@ -1,0 +1,74 @@
+<Stack gap="16">
+  <H1>Context window</H1>
+  <MD>
+    64% of the 120k token budget is in use for this chat.
+  </MD>
+  <UsageBar total="120000" topLeftLabel="64% full" topRightLabel="76.8k / 120k">
+    <segments>
+      <segment id="system" value="8000" color="gray"/>
+      <segment id="tools" value="24000" color="purple"/>
+      <segment id="rules" value="12000" color="green"/>
+      <segment id="skills" value="6000" color="yellow"/>
+      <segment id="conversation" value="26800" color="orange"/>
+    </segments>
+  </UsageBar>
+  <H2>Breakdown</H2>
+  <CollapsibleSection title="Tools" count="4" defaultOpen="true">
+    <leading>
+      <Swatch color="purple"/>
+    </leading>
+    <trailing>24.0k</trailing>
+    <CollapsibleSection title="Grep" count="12" defaultOpen="false">
+      <leading>
+        <Swatch color="blue"/>
+      </leading>
+      <trailing>6.1k</trailing>
+      Search calls over the last turn.
+    </CollapsibleSection>
+    <CollapsibleSection title="Read" count="7" defaultOpen="false">
+      <leading>
+        <Swatch color="cyan"/>
+      </leading>
+      <trailing>9.4k</trailing>
+      File reads for the payments client.
+    </CollapsibleSection>
+  </CollapsibleSection>
+  <CollapsibleSection title="Conversation" count="18" defaultOpen="false">
+    <leading>
+      <Swatch color="orange"/>
+    </leading>
+    <trailing>26.8k</trailing>
+    Messages in this thread.
+  </CollapsibleSection>
+  <H2>Where the tokens went</H2>
+  <Grid columns="2" gap="16" align="stretch">
+    <PieChart size="180" donut="true">
+      <data>
+        <point label="Tools" value="24000" tone="info"/>
+        <point label="Rules" value="12000" tone="success"/>
+        <point label="Skills" value="6000" tone="warning"/>
+        <point label="Conversation" value="26800" tone="danger"/>
+        <point label="System" value="8000" tone="neutral"/>
+      </data>
+    </PieChart>
+    <BarChart height="200" stacked="false" horizontal="false" showValues="true" beginAtZero="true">
+      <categories>
+        <category>System</category>
+        <category>Tools</category>
+        <category>Rules</category>
+        <category>Skills</category>
+        <category>Chat</category>
+      </categories>
+      <series>
+        <series name="Tokens" tone="info">
+          <value>8000</value>
+          <value>24000</value>
+          <value>12000</value>
+          <value>6000</value>
+          <value>26800</value>
+        </series>
+      </series>
+    </BarChart>
+  </Grid>
+  <Callout tone="info" title="Headroom">43k tokens remain before the window is full.</Callout>
+</Stack>

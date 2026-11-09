@@ -1,0 +1,90 @@
+<Stack gap="16">
+  <H1>Checkout reliability</H1>
+  <MD>
+    Errors clustered in **payments**. Source: gateway, 22-28 Sep 2026.
+  </MD>
+  <Row gap="12" align="center" justify="start" wrap="true">
+    <Stat value="420" label="p95 ms" tone="danger"/>
+    <Stat value="8.4%" label="Retry share" tone="warning"/>
+    <Stat value="99.2%" label="Success" tone="success"/>
+    <Stat value="3" label="Hot services" tone="info"/>
+  </Row>
+  <Callout tone="warning" title="Retry budget">Retries crossed 8% of checkout traffic after the payments deploy.</Callout>
+  <H2>Latency by day</H2>
+  <LineChart height="220" fill="true" valueSuffix=" ms" showValues="false" showHoverGuide="true" beginAtZero="false" yMin="180" yMax="460">
+    <categories>
+      <category>Mon</category>
+      <category>Tue</category>
+      <category>Wed</category>
+      <category>Thu</category>
+      <category>Fri</category>
+    </categories>
+    <series>
+      <series name="p95" tone="danger">
+        <value>240</value>
+        <value>260</value>
+        <value>310</value>
+        <value>420</value>
+        <value>390</value>
+      </series>
+      <series name="p50" tone="info">
+        <value>90</value>
+        <value>95</value>
+        <value>110</value>
+        <value>140</value>
+        <value>128</value>
+      </series>
+    </series>
+    <referenceLines>
+      <line value="300" label="Budget" tone="warning"/>
+    </referenceLines>
+  </LineChart>
+  <H2>Services</H2>
+  <Table framed="true" striped="true" stickyHeader="true">
+    <headers>
+      <header>Service</header>
+      <header>Status</header>
+      <header>p95 ms</header>
+    </headers>
+    <columnAlign>
+      <align>left</align>
+      <align>left</align>
+      <align>right</align>
+    </columnAlign>
+    <rowTone>
+      <tone>danger</tone>
+      <tone>warning</tone>
+      <tone>success</tone>
+    </rowTone>
+    <rows>
+      <row>
+        <cell>payments</cell>
+        <cell>Hot</cell>
+        <cell>420</cell>
+      </row>
+      <row>
+        <cell>checkout</cell>
+        <cell>Noisy</cell>
+        <cell>260</cell>
+      </row>
+      <row>
+        <cell>catalog</cell>
+        <cell>Steady</cell>
+        <cell>80</cell>
+      </row>
+    </rows>
+    <emptyMessage>No services</emptyMessage>
+  </Table>
+  <H2>Error share</H2>
+  <UsageBar total="1240" topLeftLabel="100% of 5xx" topRightLabel="1,240 responses">
+    <segments>
+      <segment id="payments" value="769" color="red"/>
+      <segment id="checkout" value="298" color="orange"/>
+      <segment id="catalog" value="173" color="blue"/>
+    </segments>
+  </UsageBar>
+  <Row gap="8" align="center" justify="end" wrap="false">
+    <Button variant="ghost" disabled="false" onClick="dismiss">Dismiss</Button>
+    <Button variant="primary" disabled="false" onClick="openRun">Open run</Button>
+  </Row>
+</Stack>

@@ -1,0 +1,17 @@
+<LineChart height="220" fill="true" valueSuffix="%" valuePrefix="$" showValues="true" showHoverGuide="true" beginAtZero="false" yMin="99" yMax="100">
+  <categories>
+    <category>Mon</category>
+    <category>Tue</category>
+    <category>Wed</category>
+  </categories>
+  <series>
+    <series name="Uptime" tone="info">
+      <value>99.91</value>
+      <value>99.95</value>
+      <value>99.7</value>
+    </series>
+  </series>
+  <referenceLines>
+    <line value="99.9" label="SLO" tone="danger"/>
+  </referenceLines>
+</LineChart>

@@ -1,0 +1,4 @@
+<Grid columns="1fr 2fr" gap="12" align="stretch">
+  <cell>Checks</cell>
+  <cell>12 failing</cell>
+</Grid>

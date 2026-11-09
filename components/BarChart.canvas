@@ -1,0 +1,22 @@
+<BarChart height="240" stacked="true" horizontal="false" normalized="false" valueSuffix=" ms" valuePrefix="$" showValues="true" beginAtZero="false" yMin="0" yMax="300">
+  <categories>
+    <category>Mon</category>
+    <category>Tue</category>
+    <category>Wed</category>
+  </categories>
+  <series>
+    <series name="Accepted" tone="success">
+      <value>70</value>
+      <value>80</value>
+      <value>60</value>
+    </series>
+    <series name="Rejected" tone="danger">
+      <value>30</value>
+      <value>20</value>
+      <value>40</value>
+    </series>
+  </series>
+  <referenceLines>
+    <line value="200" label="Budget" tone="warning"/>
+  </referenceLines>
+</BarChart>

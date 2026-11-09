@@ -1,0 +1,14 @@
+<DAGLayoutResult direction="vertical" width="208" height="152">
+  <nodes>
+    <node id="a" x="24" y="24" rank="0" order="0"/>
+    <node id="b" x="24" y="128" rank="1" order="0"/>
+  </nodes>
+  <edges>
+    <edge from="a" to="b" sourceX="104" sourceY="64" targetX="104" targetY="128" isBackEdge="false"/>
+  </edges>
+  <ranks>
+    <rank rank="0" x="24" y="24" width="160" height="40">
+      <nodeId>a</nodeId>
+    </rank>
+  </ranks>
+</DAGLayoutResult>

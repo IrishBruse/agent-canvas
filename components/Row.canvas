@@ -1,0 +1,4 @@
+<Row gap="8" align="center" justify="space-between" wrap="true">
+  Save
+  Cancel
+</Row>

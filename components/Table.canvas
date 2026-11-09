@@ -1,0 +1,29 @@
+<Table framed="true" striped="true" stickyHeader="true">
+  <headers>
+    <header>Service</header>
+    <header>Status</header>
+    <header>RPS</header>
+  </headers>
+  <columnAlign>
+    <align>left</align>
+    <align>left</align>
+    <align>right</align>
+  </columnAlign>
+  <rowTone>
+    <tone>success</tone>
+    <tone>danger</tone>
+  </rowTone>
+  <rows>
+    <row>
+      <cell>api-gateway</cell>
+      <cell>Steady</cell>
+      <cell>3.2k</cell>
+    </row>
+    <row>
+      <cell>workers</cell>
+      <cell>Hot</cell>
+      <cell>8.1k</cell>
+    </row>
+  </rows>
+  <emptyMessage>No services</emptyMessage>
+</Table>

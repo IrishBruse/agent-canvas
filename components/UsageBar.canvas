@@ -1,0 +1,6 @@
+<UsageBar total="120000" topLeftLabel="64% Full" topRightLabel="76.8K / 120K">
+  <segments>
+    <segment id="system" value="8000" color="gray"/>
+    <segment id="tools" value="24000" color="purple"/>
+  </segments>
+</UsageBar>

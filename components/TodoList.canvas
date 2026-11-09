@@ -1,0 +1,9 @@
+<TodoList onTodoClick="selectTodo">
+  <dimmedTodoIds>
+    <id>todo-2</id>
+  </dimmedTodoIds>
+  <todos>
+    <todo id="todo-1" content="Ship the canvas" status="completed"/>
+    <todo id="todo-2" content="Write the notes" status="in_progress"/>
+  </todos>
+</TodoList>

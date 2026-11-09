@@ -1,0 +1,6 @@
+<DAGLayoutRank rank="0" x="24" y="24" width="160" height="40">
+  <nodeIds>
+    <id>a</id>
+    <id>b</id>
+  </nodeIds>
+</DAGLayoutRank>

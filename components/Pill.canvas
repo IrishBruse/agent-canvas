@@ -1,0 +1,4 @@
+<Pill active="true" tone="neutral" size="sm" keyboardHint="⇧Tab" disabled="false" title="Plan" onClick="plan">
+  <leadingContent>spark</leadingContent>
+  Plan
+</Pill>

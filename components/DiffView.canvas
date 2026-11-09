@@ -1,0 +1,7 @@
+<DiffView path="src/utils.ts" language="typescript" showLineNumbers="true" coloredLineNumbers="true" showAccentStrip="true">
+  <lines>
+    <line type="unchanged" content="export function add(a, b) {" lineNumber="1"/>
+    <line type="removed" content="  return a + b" lineNumber="2"/>
+    <line type="added" content="  return a + b + 1" lineNumber="2"/>
+  </lines>
+</DiffView>

@@ -1,0 +1,7 @@
+<Select value="medium" onChange="setPriority" placeholder="Choose priority" disabled="false">
+  <options>
+    <option value="low" label="Low" disabled="false"/>
+    <option value="medium" label="Medium" disabled="false"/>
+    <option value="high" label="High" disabled="true"/>
+  </options>
+</Select>

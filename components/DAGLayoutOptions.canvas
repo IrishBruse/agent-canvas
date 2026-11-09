@@ -1,0 +1,9 @@
+<DAGLayoutOptions direction="vertical" nodeWidth="160" nodeHeight="40" rankGap="64" nodeGap="48" padding="24">
+  <nodes>
+    <node id="a"/>
+    <node id="b"/>
+  </nodes>
+  <edges>
+    <edge from="a" to="b"/>
+  </edges>
+</DAGLayoutOptions>

@@ -1,0 +1,3 @@
+<Card variant="default" size="lg" stickyHeader="true" collapsible="true" defaultOpen="false" open="true" onOpenChange="setOpen">
+  src/utils.ts
+</Card>

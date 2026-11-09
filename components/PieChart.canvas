@@ -1,0 +1,6 @@
+<PieChart size="200" donut="true">
+  <data>
+    <point label="Passing" value="70" tone="success"/>
+    <point label="Failing" value="30" tone="danger"/>
+  </data>
+</PieChart>

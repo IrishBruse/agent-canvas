@@ -1,0 +1,1 @@
+<Checkbox checked="true" onChange="setAgreed" disabled="false" label="I agree to the terms"/>
