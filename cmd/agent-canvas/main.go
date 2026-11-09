@@ -5,6 +5,9 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/IrishBruse/agent-canvas/internal/markup"
+	"github.com/IrishBruse/agent-canvas/internal/render"
 )
 
 func main() {
@@ -22,12 +25,12 @@ func main() {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
-	root, err := parse(strings.NewReader(string(raw)))
+	root, err := markup.Parse(strings.NewReader(string(raw)))
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
-	if err := os.WriteFile(out, []byte(page(root)), 0o644); err != nil {
+	if err := os.WriteFile(out, []byte(render.Page(root)), 0o644); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}

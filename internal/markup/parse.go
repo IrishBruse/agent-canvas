@@ -1,4 +1,4 @@
-package main
+package markup
 
 import (
 	"encoding/xml"
@@ -7,26 +7,26 @@ import (
 	"strings"
 )
 
-type attr struct {
+type Attr struct {
 	Name  string
 	Value string
 }
 
-type kid struct {
+type Kid struct {
 	Text string
-	El   *node
+	El   *Node
 }
 
-type node struct {
+type Node struct {
 	Name  string
-	Attrs []attr
-	Kids  []kid
+	Attrs []Attr
+	Kids  []Kid
 }
 
-func parse(r io.Reader) (*node, error) {
+func Parse(r io.Reader) (*Node, error) {
 	dec := xml.NewDecoder(r)
-	var stack []*node
-	var root *node
+	var stack []*Node
+	var root *Node
 	for {
 		tok, err := dec.Token()
 		if err == io.EOF {
@@ -37,13 +37,13 @@ func parse(r io.Reader) (*node, error) {
 		}
 		switch t := tok.(type) {
 		case xml.StartElement:
-			n := &node{Name: t.Name.Local}
+			n := &Node{Name: t.Name.Local}
 			for _, a := range t.Attr {
-				n.Attrs = append(n.Attrs, attr{Name: a.Name.Local, Value: a.Value})
+				n.Attrs = append(n.Attrs, Attr{Name: a.Name.Local, Value: a.Value})
 			}
 			if len(stack) > 0 {
 				parent := stack[len(stack)-1]
-				parent.Kids = append(parent.Kids, kid{El: n})
+				parent.Kids = append(parent.Kids, Kid{El: n})
 			}
 			stack = append(stack, n)
 			if root == nil {
@@ -66,7 +66,7 @@ func parse(r io.Reader) (*node, error) {
 					continue
 				}
 			}
-			parent.Kids = append(parent.Kids, kid{Text: text})
+			parent.Kids = append(parent.Kids, Kid{Text: text})
 		}
 	}
 	if root == nil {
@@ -78,7 +78,7 @@ func parse(r io.Reader) (*node, error) {
 	return root, nil
 }
 
-func (n *node) attr(name string) string {
+func (n *Node) Attr(name string) string {
 	for _, a := range n.Attrs {
 		if a.Name == name {
 			return a.Value
@@ -87,8 +87,8 @@ func (n *node) attr(name string) string {
 	return ""
 }
 
-func (n *node) truthy(name string) bool {
-	switch strings.ToLower(n.attr(name)) {
+func (n *Node) Truthy(name string) bool {
+	switch strings.ToLower(n.Attr(name)) {
 	case "1", "true", "yes":
 		return true
 	default:
@@ -96,7 +96,7 @@ func (n *node) truthy(name string) bool {
 	}
 }
 
-func (n *node) child(name string) *node {
+func (n *Node) Child(name string) *Node {
 	for _, k := range n.Kids {
 		if k.El != nil && k.El.Name == name {
 			return k.El
@@ -105,8 +105,8 @@ func (n *node) child(name string) *node {
 	return nil
 }
 
-func (n *node) elements(name string) []*node {
-	var out []*node
+func (n *Node) Elements(name string) []*Node {
+	var out []*Node
 	for _, k := range n.Kids {
 		if k.El != nil && k.El.Name == name {
 			out = append(out, k.El)
@@ -115,7 +115,7 @@ func (n *node) elements(name string) []*node {
 	return out
 }
 
-func (n *node) text() string {
+func (n *Node) Text() string {
 	var b strings.Builder
 	for _, k := range n.Kids {
 		if k.El == nil && k.Text != "" {

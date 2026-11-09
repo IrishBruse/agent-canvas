@@ -1,18 +1,22 @@
-package main
+package render
 
 import (
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
+
+	"github.com/IrishBruse/agent-canvas/internal/markup"
 )
 
 func TestExamplesRender(t *testing.T) {
-	components, err := filepath.Glob("components/*.canvas")
+	root := repoRoot(t)
+	components, err := filepath.Glob(filepath.Join(root, "components", "*.canvas"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	examples, err := filepath.Glob("examples/*.canvas")
+	examples, err := filepath.Glob(filepath.Join(root, "examples", "*.canvas"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -28,11 +32,11 @@ func TestExamplesRender(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		root, err := parse(strings.NewReader(string(raw)))
+		doc, err := markup.Parse(strings.NewReader(string(raw)))
 		if err != nil {
 			t.Fatalf("%s: %v", path, err)
 		}
-		html := page(root)
+		html := Page(doc)
 		if !strings.HasPrefix(html, "<!DOCTYPE html>") {
 			t.Fatalf("%s: missing doctype", path)
 		}
@@ -46,7 +50,7 @@ func TestExamplesRender(t *testing.T) {
 }
 
 func TestMarkdown(t *testing.T) {
-	root, err := parse(strings.NewReader(`
+	doc, err := markup.Parse(strings.NewReader(`
 <Stack>
   <MD>
     # Notes
@@ -60,7 +64,7 @@ func TestMarkdown(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	html := page(root)
+	html := Page(doc)
 	for _, want := range []string{"<h1>Notes</h1>", "<strong>p95</strong>", "<li>checkout", "<li>nested</li>", `class="md"`} {
 		if !strings.Contains(html, want) {
 			t.Fatalf("missing %s\n%s", want, html)
@@ -72,12 +76,21 @@ func TestMarkdown(t *testing.T) {
 }
 
 func TestStackMarkup(t *testing.T) {
-	root, err := parse(strings.NewReader(`<Stack gap="16"><H1>Release health</H1></Stack>`))
+	doc, err := markup.Parse(strings.NewReader(`<Stack gap="16"><H1>Release health</H1></Stack>`))
 	if err != nil {
 		t.Fatal(err)
 	}
-	html := page(root)
+	html := Page(doc)
 	if !strings.Contains(html, `class="stack"`) || !strings.Contains(html, "<h1>Release health</h1>") {
 		t.Fatalf("html = %s", html)
 	}
+}
+
+func repoRoot(t *testing.T) string {
+	t.Helper()
+	_, file, _, ok := runtime.Caller(0)
+	if !ok {
+		t.Fatal("runtime.Caller")
+	}
+	return filepath.Clean(filepath.Join(filepath.Dir(file), "..", ".."))
 }

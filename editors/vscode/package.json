@@ -1,0 +1,85 @@
+{
+  "name": "agent-canvas",
+  "displayName": "Agent Canvas",
+  "description": "Live preview for .canvas files.",
+  "version": "0.1.0",
+  "publisher": "IrishBruse",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IrishBruse/agent-canvas"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Visualization"
+  ],
+  "extensionKind": [
+    "workspace"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [],
+  "contributes": {
+    "customEditors": [
+      {
+        "viewType": "agentCanvas.preview",
+        "displayName": "Agent Canvas Preview",
+        "selector": [
+          {
+            "filenamePattern": "*.canvas"
+          }
+        ],
+        "priority": "default"
+      }
+    ],
+    "commands": [
+      {
+        "command": "agentCanvas.openPreview",
+        "title": "Open Preview",
+        "category": "Agent Canvas"
+      },
+      {
+        "command": "agentCanvas.openSource",
+        "title": "Open Source",
+        "category": "Agent Canvas",
+        "icon": "$(go-to-file)"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "agentCanvas.openPreview",
+          "when": "resourceExtname == .canvas",
+          "group": "navigation"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "agentCanvas.openSource",
+          "when": "activeCustomEditorId == 'agentCanvas.preview'",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Agent Canvas",
+      "properties": {
+        "agentCanvas.executable": {
+          "type": "string",
+          "default": "",
+          "description": "Path to the agent-canvas binary. Empty uses the binary bundled with the extension, then agent-canvas on PATH."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p .",
+    "test": "npm run compile && node --test out/render.test.js"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.8.3"
+  }
+}

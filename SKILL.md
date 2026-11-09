@@ -19,11 +19,14 @@ The page inlines its CSS and has no other assets.
    When the second argument is omitted, the HTML file uses the markup path with `.html` in place of `.canvas`.
 
 ```bash
-go run . examples/release-health.canvas /tmp/release-health.html
+go run ./cmd/agent-canvas examples/release-health.canvas /tmp/release-health.html
 ```
 
 Run that from the repo root.
 Done when the command prints the HTML path and that file is one document.
+
+With the Agent Canvas extension installed, VS Code and Cursor open `.canvas` in a live preview.
+The preview renders again when the file changes.
 
 ## Markup
 
