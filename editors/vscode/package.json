@@ -4,7 +4,7 @@
   "description": "Live preview for .canvas files.",
   "version": "0.1.0",
   "publisher": "IrishBruse",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/IrishBruse/agent-canvas"

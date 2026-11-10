@@ -70,16 +70,14 @@ The agent writes a file in your project.
 You run the CLI on that file.
 Any agent that reads the skill can do this work.
 
-Copy the skill into the skill folder your agent reads.
-This repo uses `~/.agents/skills`:
+The CLI contains the skill text.
+`agent-canvas install-skill` writes that text to `~/.agents/skills/agent-canvas/SKILL.md`.
 
 ```bash
-mkdir -p ~/.agents/skills/agent-canvas
-cp SKILL.md ~/.agents/skills/agent-canvas/SKILL.md
+agent-canvas install-skill
 ```
 
-Run those commands from a clone.
-`just install-skill` copies `SKILL.md` to that folder.
+In a clone, `just install-skill` runs `go run ./cmd/agent-canvas install-skill`.
 When the agent loads skills from this repo, point it at `SKILL.md`.
 
 ## Extension

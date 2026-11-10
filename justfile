@@ -2,10 +2,9 @@
 install:
     go install ./cmd/agent-canvas
 
-# Copy SKILL.md to ~/.agents/skills/agent-canvas/SKILL.md.
+# Write the embedded skill to ~/.agents/skills/agent-canvas/SKILL.md.
 install-skill:
-    mkdir -p "$HOME/.agents/skills/agent-canvas"
-    cp SKILL.md "$HOME/.agents/skills/agent-canvas/SKILL.md"
+    go run ./cmd/agent-canvas install-skill
 
 # Build the VS Code extension and install it into Cursor or VS Code.
 install-extension:
