@@ -19,19 +19,19 @@ func render(n *markup.Node) string {
 		return el("div", rowClass(n), gapStyle(n), renderKids(n, nil))
 	case "Grid":
 		return el("div", "grid", gridStyle(n), renderKids(n, nil))
-	case "Divider":
+	case "hr":
 		return "<hr>"
 	case "Spacer":
 		return `<span class="spacer"></span>`
-	case "Text":
+	case "p":
 		return el("p", textClass(n), "", renderKids(n, nil))
-	case "H1", "H2", "H3":
-		return el(strings.ToLower(n.Name), "", "", renderKids(n, nil))
-	case "MD":
+	case "h1", "h2", "h3", "h4", "h5", "h6":
+		return el(n.Name, "", "", renderKids(n, nil))
+	case "markdown":
 		return renderMD(n)
-	case "Code":
+	case "code":
 		return el("code", "", "", renderKids(n, nil))
-	case "Link":
+	case "link":
 		return fmt.Sprintf(`<a href="%s">%s</a>`, html.EscapeString(n.Attr("href")), renderKids(n, nil))
 	case "Card":
 		return renderCard(n)
@@ -47,9 +47,9 @@ func render(n *markup.Node) string {
 		return el("span", "text", "", html.EscapeString(mark))
 	case "CollapsibleSection":
 		return renderSection(n)
-	case "Table":
+	case "table":
 		return renderTable(n)
-	case "Button":
+	case "button":
 		return renderButton(n)
 	case "Pill":
 		return renderPill(n)
@@ -73,17 +73,17 @@ func render(n *markup.Node) string {
 		return renderTodoList(n, false)
 	case "TodoListCard":
 		return renderTodoList(n, true)
-	case "TextInput":
+	case "input":
 		return renderInput(n, false)
-	case "TextArea":
+	case "textarea":
 		return renderInput(n, true)
 	case "Checkbox":
 		return renderCheckbox(n)
 	case "Toggle":
 		return renderToggle(n)
-	case "SelectOption":
+	case "option":
 		return renderOption(n)
-	case "Select":
+	case "select":
 		return renderSelect(n)
 	case "ChartDataPoint":
 		return renderPie(&markup.Node{Name: "PieChart", Kids: []markup.Kid{{El: n}}})

@@ -1,1 +1,0 @@
-<TextArea value="Ship after checks pass." onChange="setNotes" placeholder="Add notes" disabled="false" rows="4"/>

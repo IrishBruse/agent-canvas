@@ -118,7 +118,7 @@ To use another binary, set `agentCanvas.executable` to its path.
 Write one root element.
 Put a parameter on an attribute.
 Put nested components inside the element.
-`MD` holds markdown.
+`markdown` holds markdown.
 Use it for this text:
 
 - prose
@@ -128,11 +128,11 @@ Use it for this text:
 
 ```xml
 <Stack gap="16">
-  <H1>Checkout reliability</H1>
+  <h1>Checkout reliability</h1>
   <Stat value="99.2%" label="Success" tone="success"/>
-  <MD>
+  <markdown>
     Payments **p95** crossed the budget.
-  </MD>
+  </markdown>
 </Stack>
 ```
 
@@ -142,25 +142,31 @@ These files are full pages:
 - `examples/pull-request.canvas` — a diff, pills, and cards
 - `examples/context-usage.canvas` — a usage bar and nested sections
 
-Each file in `components/` shows one component.
+Each file under `components/` shows one component.
 
-Layout:
+Layout (`components/layout/`):
 
-- `Stack`, `Row`, `Grid`, `Card`, `Divider`, `Spacer`, `CollapsibleSection`
+- `Stack`, `Row`, `Grid`, `Card`, `hr`, `Spacer`, `CollapsibleSection`
 
-Text:
+Text (`components/text/`):
 
-- `H1`, `H2`, `H3`, `Text`, `MD`, `Code`, `Link`
+- `h1`, `h2`, `h3`, `p`, `markdown`, `code`, `link`
 
-Status and data:
+Status (`components/status/`):
 
-- `Stat`, `Callout`, `Pill`, `Table`, `TodoList`, `TodoListCard`, `Swatch`
+- `Stat`, `Callout`, `Pill`, `table`, `TodoList`, `TodoListCard`, `Swatch`
+
+Charts (`components/chart/`):
+
 - `BarChart`, `LineChart`, `PieChart`, `UsageBar`
+
+Diff (`components/diff/`):
+
 - `DiffView`, `DiffStats`
 
-Controls on the page:
+Controls (`components/controls/`):
 
-- `Button`, `IconButton`, `TextInput`, `TextArea`, `Checkbox`, `Toggle`, `Select`
+- `button`, `IconButton`, `input`, `textarea`, `Checkbox`, `Toggle`, `select`
 
 Read [SKILL.md](./SKILL.md) for the agent markup rules.
 
@@ -169,7 +175,7 @@ Read [SKILL.md](./SKILL.md) for the agent markup rules.
 - `cmd/agent-canvas` — the CLI
 - `SKILL.md` — the skill
 - `editors/vscode` — the VS Code and Cursor extension
-- `components/` — one file per component
+- `components/` — one file per component, grouped by folder
 - `examples/` — full pages
 - `internal/markup` — the parser
 - `internal/render` — the HTML writer

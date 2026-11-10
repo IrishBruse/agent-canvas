@@ -1,3 +1,7 @@
 <Card variant="default" size="lg" stickyHeader="true" collapsible="true" defaultOpen="false" open="true" onOpenChange="setOpen">
-  src/utils.ts
+  <CardHeader>
+    billing-service
+    <trailing>Healthy</trailing>
+  </CardHeader>
+  <CardBody>Service is currently healthy.</CardBody>
 </Card>

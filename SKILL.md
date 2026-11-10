@@ -7,7 +7,8 @@ description: Turn agent-canvas markup into one HTML file. Use when rendering a .
 
 `agent-canvas` reads one markup file and writes one HTML file.
 The markup is XML-shaped component tags.
-One file per component lives in `components/` beside this skill.
+One file per component lives under `components/`.
+The folders are `layout`, `text`, `status`, `chart`, `diff`, and `controls`.
 Combined pages live in `examples/`.
 The page inlines its CSS and has no other assets.
 
@@ -33,23 +34,30 @@ The preview renders again when the file changes.
 Write one root element.
 Put a parameter on an attribute.
 Put nested components and slot content inside the element.
-Open the matching file in `components/` when the shape of a component is the question.
+Use an HTML tag when HTML has that element.
+A heading is `h1`, `h2`, or `h3`.
+A link is `link`.
+Set `href` to the URL.
+A table uses `table`, `thead`, `tbody`, `tr`, `th`, and `td`.
+Put `align` on a `th` to align that column.
+Put `tone` on a `tr` to mark that row.
+Open the file with that name under `components/` when the shape of a component is the question.
 Open a file in `examples/` when the question is how components sit together.
 A component with no parameters is an empty tag.
 
 ## Plain text
 
-Write prose, lists, tables, and inline code as markdown inside `MD`.
+Write prose, lists, tables, and inline code as markdown inside `markdown`.
 Indent the markdown with the surrounding markup.
 The CLI strips the shared indent before rendering.
 
 ```xml
-<MD>
+<markdown>
   Payments **p95** crossed the budget.
 
   - checkout
   - catalog
-</MD>
+</markdown>
 ```
 
-Use `Text`, a heading, or `Code` when that single component is the whole element.
+Use `p`, `h1`, or `code` when that element is the whole component.

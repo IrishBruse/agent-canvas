@@ -73,6 +73,17 @@ func safeColor(v string) string {
 	}
 }
 
+func texts(n *markup.Node, name string) []string {
+	if n == nil {
+		return nil
+	}
+	var out []string
+	for _, el := range n.Elements(name) {
+		out = append(out, el.Text())
+	}
+	return out
+}
+
 func number(v string) float64 {
 	f, err := strconv.ParseFloat(strings.TrimSpace(v), 64)
 	if err != nil {

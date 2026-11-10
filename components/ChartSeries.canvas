@@ -1,7 +1,0 @@
-<ChartSeries name="Accepted" tone="success">
-  <data>
-    <value>70</value>
-    <value>80</value>
-    <value>60</value>
-  </data>
-</ChartSeries>

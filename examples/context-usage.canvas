@@ -1,8 +1,8 @@
 <Stack gap="16">
-  <H1>Context window</H1>
-  <MD>
+  <h1>Context window</h1>
+  <markdown>
     64% of the 120k token budget is in use for this chat.
-  </MD>
+  </markdown>
   <UsageBar total="120000" topLeftLabel="64% full" topRightLabel="76.8k / 120k">
     <segments>
       <segment id="system" value="8000" color="gray"/>
@@ -12,7 +12,7 @@
       <segment id="conversation" value="26800" color="orange"/>
     </segments>
   </UsageBar>
-  <H2>Breakdown</H2>
+  <h2>Breakdown</h2>
   <CollapsibleSection title="Tools" count="4" defaultOpen="true">
     <leading>
       <Swatch color="purple"/>
@@ -40,7 +40,7 @@
     <trailing>26.8k</trailing>
     Messages in this thread.
   </CollapsibleSection>
-  <H2>Where the tokens went</H2>
+  <h2>Where the tokens went</h2>
   <Grid columns="2" gap="16" align="stretch">
     <PieChart size="180" donut="true">
       <data>

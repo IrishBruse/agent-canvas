@@ -12,7 +12,7 @@ import (
 
 func TestExamplesRender(t *testing.T) {
 	root := repoRoot(t)
-	components, err := filepath.Glob(filepath.Join(root, "components", "*.canvas"))
+	components, err := canvasFiles(filepath.Join(root, "components"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -20,7 +20,7 @@ func TestExamplesRender(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(components) < 60 {
+	if len(components) < 30 {
 		t.Fatalf("components = %d", len(components))
 	}
 	if len(examples) < 3 {
@@ -49,17 +49,31 @@ func TestExamplesRender(t *testing.T) {
 	}
 }
 
+func canvasFiles(dir string) ([]string, error) {
+	var out []string
+	err := filepath.WalkDir(dir, func(path string, d os.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if !d.IsDir() && strings.HasSuffix(d.Name(), ".canvas") {
+			out = append(out, path)
+		}
+		return nil
+	})
+	return out, err
+}
+
 func TestMarkdown(t *testing.T) {
 	doc, err := markup.Parse(strings.NewReader(`
 <Stack>
-  <MD>
+  <markdown>
     # Notes
 
     Payments **p95** crossed.
 
     - checkout
       - nested
-  </MD>
+  </markdown>
 </Stack>`))
 	if err != nil {
 		t.Fatal(err)
@@ -76,13 +90,46 @@ func TestMarkdown(t *testing.T) {
 }
 
 func TestStackMarkup(t *testing.T) {
-	doc, err := markup.Parse(strings.NewReader(`<Stack gap="16"><H1>Release health</H1></Stack>`))
+	doc, err := markup.Parse(strings.NewReader(`<Stack gap="16"><h1>Release health</h1></Stack>`))
 	if err != nil {
 		t.Fatal(err)
 	}
 	html := Page(doc)
 	if !strings.Contains(html, `class="stack"`) || !strings.Contains(html, "<h1>Release health</h1>") {
 		t.Fatalf("html = %s", html)
+	}
+}
+
+func TestTable(t *testing.T) {
+	doc, err := markup.Parse(strings.NewReader(`
+<table striped="true" stickyHeader="true">
+  <thead>
+    <tr>
+      <th>Service</th>
+      <th align="right">RPS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr tone="danger">
+      <td>api</td>
+      <td>3.2k</td>
+    </tr>
+  </tbody>
+</table>`))
+	if err != nil {
+		t.Fatal(err)
+	}
+	html := Page(doc)
+	for _, want := range []string{
+		`class="table-frame sticky"`,
+		`<table class="data striped">`,
+		`<th class="num">RPS</th>`,
+		`<tr class="tone-danger">`,
+		`<td class="num">3.2k</td>`,
+	} {
+		if !strings.Contains(html, want) {
+			t.Fatalf("missing %s\n%s", want, html)
+		}
 	}
 }
 

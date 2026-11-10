@@ -60,7 +60,7 @@ func Parse(r io.Reader) (*Node, error) {
 			}
 			parent := stack[len(stack)-1]
 			text := string(t)
-			if parent.Name != "MD" {
+			if parent.Name != "markdown" {
 				text = strings.TrimSpace(text)
 				if text == "" {
 					continue

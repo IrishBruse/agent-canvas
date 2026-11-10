@@ -1,0 +1,5 @@
+<select value="medium" onChange="setPriority" placeholder="Choose priority" disabled="false">
+  <option value="low">Low</option>
+  <option value="medium">Medium</option>
+  <option value="high" disabled="true">High</option>
+</select>

@@ -1,0 +1,21 @@
+<table framed="true" striped="true" stickyHeader="true" empty="No services">
+  <thead>
+    <tr>
+      <th>Service</th>
+      <th>Status</th>
+      <th align="right">RPS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr tone="success">
+      <td>api-gateway</td>
+      <td>Steady</td>
+      <td>3.2k</td>
+    </tr>
+    <tr tone="danger">
+      <td>workers</td>
+      <td>Hot</td>
+      <td>8.1k</td>
+    </tr>
+  </tbody>
+</table>

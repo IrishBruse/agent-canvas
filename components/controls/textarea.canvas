@@ -1,0 +1,1 @@
+<textarea onChange="setNotes" placeholder="Add notes" disabled="false" rows="4">Ship after checks pass.</textarea>

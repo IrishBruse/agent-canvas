@@ -64,7 +64,11 @@ func renderInput(n *markup.Node, area bool) string {
 		disabled = " disabled"
 	}
 	if area {
-		return fmt.Sprintf(`<textarea class="input" rows="%s" placeholder="%s"%s>%s</textarea>`, html.EscapeString(first(n.Attr("rows"), "3")), html.EscapeString(n.Attr("placeholder")), disabled, html.EscapeString(n.Attr("value")))
+		text := n.Text()
+		if text == "" {
+			text = n.Attr("value")
+		}
+		return fmt.Sprintf(`<textarea class="input" rows="%s" placeholder="%s"%s>%s</textarea>`, html.EscapeString(first(n.Attr("rows"), "3")), html.EscapeString(n.Attr("placeholder")), disabled, html.EscapeString(text))
 	}
 	return fmt.Sprintf(`<input class="input" type="text" value="%s" placeholder="%s"%s>`, html.EscapeString(n.Attr("value")), html.EscapeString(n.Attr("placeholder")), disabled)
 }
@@ -98,7 +102,11 @@ func renderOption(n *markup.Node) string {
 	if n.Truthy("disabled") {
 		disabled = " disabled"
 	}
-	return fmt.Sprintf(`<option value="%s"%s>%s</option>`, html.EscapeString(n.Attr("value")), disabled, html.EscapeString(n.Attr("label")))
+	label := n.Attr("label")
+	if label == "" {
+		label = n.Text()
+	}
+	return fmt.Sprintf(`<option value="%s"%s>%s</option>`, html.EscapeString(n.Attr("value")), disabled, html.EscapeString(label))
 }
 
 func renderSelect(n *markup.Node) string {
@@ -115,7 +123,7 @@ func renderSelect(n *markup.Node) string {
 	if host == nil {
 		host = n
 	}
-	for _, opt := range append(host.Elements("option"), host.Elements("SelectOption")...) {
+	for _, opt := range host.Elements("option") {
 		selected := ""
 		if opt.Attr("value") == n.Attr("value") {
 			selected = " selected"
@@ -124,7 +132,11 @@ func renderSelect(n *markup.Node) string {
 		if opt.Truthy("disabled") {
 			disabled = " disabled"
 		}
-		fmt.Fprintf(&b, `<option value="%s"%s%s>%s</option>`, html.EscapeString(opt.Attr("value")), selected, disabled, html.EscapeString(opt.Attr("label")))
+		label := opt.Attr("label")
+		if label == "" {
+			label = opt.Text()
+		}
+		fmt.Fprintf(&b, `<option value="%s"%s%s>%s</option>`, html.EscapeString(opt.Attr("value")), selected, disabled, html.EscapeString(label))
 	}
 	b.WriteString(`</select>`)
 	return b.String()

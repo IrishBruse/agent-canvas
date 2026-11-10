@@ -1,5 +1,5 @@
 <Stack gap="16">
-  <H1>Payments timeout</H1>
+  <h1>Payments timeout</h1>
   <Row gap="8" align="center" justify="space-between" wrap="true">
     <Row gap="8" align="center" justify="start" wrap="true">
       <Pill active="true" tone="neutral" size="md" onClick="filterDiff">Diff</Pill>
@@ -8,10 +8,10 @@
     </Row>
     <DiffStats additions="12" deletions="4"/>
   </Row>
-  <MD>
+  <markdown>
     Branch `fix/payments-timeout` against main.
     See the [pull request](https://example.com/pr/4821).
-  </MD>
+  </markdown>
   <Card variant="default" size="base" collapsible="true" defaultOpen="true" open="true" onOpenChange="toggleFile">
     <CardHeader>
       src/payments/client.ts
@@ -42,7 +42,7 @@
       </DiffView>
     </CardBody>
   </Card>
-  <H2>Review</H2>
+  <h2>Review</h2>
   <TodoListCard defaultExpanded="true" onTodoClick="openItem">
     <todos>
       <todo id="timeout" content="Confirm the 1500ms budget with payments" status="completed"/>
@@ -50,15 +50,13 @@
       <todo id="docs" content="Note the timeout in the runbook" status="pending"/>
     </todos>
   </TodoListCard>
-  <TextArea value="" onChange="setComment" placeholder="Leave a review comment" rows="4"/>
+  <textarea onChange="setComment" placeholder="Leave a review comment" rows="4"></textarea>
   <Row gap="8" align="center" justify="space-between" wrap="false">
-    <Select value="comment" onChange="setAction" placeholder="Choose an action">
-      <options>
-        <option value="comment" label="Comment" disabled="false"/>
-        <option value="approve" label="Approve" disabled="false"/>
-        <option value="request" label="Request changes" disabled="false"/>
-      </options>
-    </Select>
-    <Button variant="primary" disabled="false" onClick="submit">Submit review</Button>
+    <select value="comment" onChange="setAction" placeholder="Choose an action">
+      <option value="comment">Comment</option>
+      <option value="approve">Approve</option>
+      <option value="request">Request changes</option>
+    </select>
+    <button variant="primary" disabled="false" onClick="submit">Submit review</button>
   </Row>
 </Stack>

@@ -9,71 +9,118 @@ import (
 )
 
 func renderTable(n *markup.Node) string {
-	headers := texts(n.Child("headers"), "header")
-	aligns := texts(n.Child("columnAlign"), "align")
-	tones := texts(n.Child("rowTone"), "tone")
-	var rows [][]string
-	if body := n.Child("rows"); body != nil {
-		for _, row := range body.Elements("row") {
-			rows = append(rows, texts(row, "cell"))
-		}
-	}
 	className := "data"
 	if n.Truthy("striped") {
 		className += " striped"
 	}
+	aligns := columnAligns(n)
 	var b strings.Builder
-	b.WriteString("<table class=\"" + className + "\"><thead><tr>")
-	for i, h := range headers {
-		b.WriteString("<th" + alignAttr(aligns, i) + ">" + html.EscapeString(h) + "</th>")
+	fmt.Fprintf(&b, `<table class="%s">`, className)
+	if caption := n.Child("caption"); caption != nil {
+		b.WriteString("<caption>" + renderKids(caption, nil) + "</caption>")
 	}
-	b.WriteString("</tr></thead><tbody>")
-	if len(rows) == 0 {
+	rows := 0
+	for _, k := range n.Kids {
+		if k.El == nil {
+			continue
+		}
+		switch k.El.Name {
+		case "thead", "tbody", "tfoot":
+			section, count := sectionHTML(k.El, aligns)
+			b.WriteString(section)
+			rows += count
+		case "tr":
+			writeRow(&b, k.El, aligns)
+			rows++
+		}
+	}
+	if rows == 0 {
 		msg := "Empty"
-		if empty := n.Child("emptyMessage"); empty != nil {
-			msg = empty.Text()
+		if n.Attr("empty") != "" {
+			msg = n.Attr("empty")
 		}
-		fmt.Fprintf(&b, `<tr><td colspan="%d">%s</td></tr>`, max(1, len(headers)), html.EscapeString(msg))
+		fmt.Fprintf(&b, `<tbody><tr><td colspan="%d">%s</td></tr></tbody>`, max(1, len(aligns)), html.EscapeString(msg))
 	}
-	for i, row := range rows {
-		tone := ""
-		if i < len(tones) && tones[i] != "" {
-			tone = ` class="tone-` + html.EscapeString(tones[i]) + `"`
-		}
-		b.WriteString("<tr" + tone + ">")
-		for c, cell := range row {
-			b.WriteString("<td" + alignAttr(aligns, c) + ">" + html.EscapeString(cell) + "</td>")
-		}
-		b.WriteString("</tr>")
+	b.WriteString("</table>")
+	if n.Attr("framed") == "false" {
+		return b.String()
 	}
-	b.WriteString("</tbody></table>")
 	frame := "table-frame"
 	if n.Truthy("stickyHeader") {
 		frame += " sticky"
 	}
-	if n.Attr("framed") == "false" {
-		return b.String()
-	}
 	return el("div", frame, "", b.String())
 }
 
-func alignAttr(aligns []string, i int) string {
-	if i < len(aligns) && aligns[i] == "right" {
-		return ` class="num"`
+func columnAligns(n *markup.Node) []string {
+	row := (*markup.Node)(nil)
+	if head := n.Child("thead"); head != nil {
+		row = head.Child("tr")
 	}
-	if i < len(aligns) && aligns[i] == "center" {
-		return ` style="text-align:center"`
+	if row == nil {
+		row = n.Child("tr")
 	}
-	return ""
-}
-
-func texts(n *markup.Node, name string) []string {
-	if n == nil {
+	if row == nil {
 		return nil
 	}
 	var out []string
-	for _, el := range n.Elements(name) {
-		out = append(out, el.Text())
+	for _, cell := range rowCells(row) {
+		out = append(out, cell.Attr("align"))
 	}
 	return out
+}
+
+func sectionHTML(n *markup.Node, aligns []string) (string, int) {
+	var inner strings.Builder
+	count := 0
+	for _, tr := range n.Elements("tr") {
+		writeRow(&inner, tr, aligns)
+		count++
+	}
+	if count == 0 {
+		return "", 0
+	}
+	return "<" + n.Name + ">" + inner.String() + "</" + n.Name + ">", count
+}
+
+func writeRow(b *strings.Builder, tr *markup.Node, aligns []string) {
+	b.WriteString("<tr" + toneClass(tr.Attr("tone")) + ">")
+	for i, cell := range rowCells(tr) {
+		align := cell.Attr("align")
+		if align == "" && i < len(aligns) {
+			align = aligns[i]
+		}
+		fmt.Fprintf(b, "<%s%s>%s</%s>", cell.Name, alignAttr(align), renderKids(cell, nil), cell.Name)
+	}
+	b.WriteString("</tr>")
+}
+
+func rowCells(tr *markup.Node) []*markup.Node {
+	var out []*markup.Node
+	for _, k := range tr.Kids {
+		if k.El != nil && (k.El.Name == "th" || k.El.Name == "td") {
+			out = append(out, k.El)
+		}
+	}
+	return out
+}
+
+func toneClass(v string) string {
+	switch v {
+	case "success", "danger", "warning", "info", "neutral":
+		return ` class="tone-` + v + `"`
+	default:
+		return ""
+	}
+}
+
+func alignAttr(align string) string {
+	switch align {
+	case "right":
+		return ` class="num"`
+	case "center":
+		return ` style="text-align:center"`
+	default:
+		return ""
+	}
 }

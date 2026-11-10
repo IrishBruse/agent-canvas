@@ -150,8 +150,8 @@ function shellHtml(webview: vscode.Webview): string {
 <meta http-equiv="Content-Security-Policy" content="${csp}">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-  html, body { margin: 0; height: 100%; background: #181818; color: #f0f0f0; }
-  iframe { border: 0; width: 100%; height: 100%; background: #181818; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #181818; color: #f0f0f0; }
+  iframe { display: block; border: 0; width: 100%; height: 100%; background: #181818; }
   #error { display: none; margin: 0; padding: 16px; white-space: pre-wrap; font: 13px/1.45 ui-monospace, monospace; color: #f85149; }
   body.error iframe { display: none; }
   body.error #error { display: block; }
