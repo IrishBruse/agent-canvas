@@ -12,7 +12,16 @@ import (
 )
 
 func main() {
-	if len(os.Args) == 2 && os.Args[1] == "install-skill" {
+	if len(os.Args) < 2 {
+		usage()
+		os.Exit(2)
+	}
+	switch os.Args[1] {
+	case "install-skill":
+		if len(os.Args) != 2 {
+			usage()
+			os.Exit(2)
+		}
 		home, err := os.UserHomeDir()
 		if err != nil {
 			fmt.Fprintln(os.Stderr, err)
@@ -25,10 +34,11 @@ func main() {
 		}
 		fmt.Println(dest)
 		return
+	case "skills":
+		os.Exit(canvas.Skills(os.Stdout, os.Stderr, os.Args[1:]))
 	}
-	if len(os.Args) < 2 || len(os.Args) > 3 {
-		fmt.Fprintln(os.Stderr, "usage: agent-canvas <input.canvas> [output.html]")
-		fmt.Fprintln(os.Stderr, "       agent-canvas install-skill")
+	if len(os.Args) > 3 {
+		usage()
 		os.Exit(2)
 	}
 	in := os.Args[1]
@@ -51,4 +61,12 @@ func main() {
 		os.Exit(1)
 	}
 	fmt.Println(out)
+}
+
+func usage() {
+	fmt.Fprintln(os.Stderr, "usage: agent-canvas <input.canvas> [output.html]")
+	fmt.Fprintln(os.Stderr, "       agent-canvas skills [list]")
+	fmt.Fprintln(os.Stderr, "       agent-canvas skills get <name> [--ref <file>]... [--full]")
+	fmt.Fprintln(os.Stderr, "       agent-canvas skills get --all")
+	fmt.Fprintln(os.Stderr, "       agent-canvas install-skill")
 }

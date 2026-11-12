@@ -345,6 +345,61 @@ details.card:not([open]) > summary { border-bottom: none; }
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+/* Secondary matches the VS Code extension button: 26px, radius 4, 13px label.
+   dropdown adds the split arrow.
+   <button class="btn secondary" type="button">Disable</button>
+   <span class="btn-split">…label…<span class="btn-split-sep"><span></span></span>…chevron…</span>
+*/
+.btn.secondary {
+  height: 26px;
+  padding: 0 8px;
+  border-radius: 4px;
+  border-color: #4b5059;
+  background: #353b45;
+  color: #ffffff;
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 400;
+}
+
+.btn.secondary:hover { background: #3e4451; }
+
+.btn-split {
+  display: inline-flex;
+  align-items: stretch;
+  vertical-align: middle;
+}
+
+.btn-split > .btn.secondary {
+  border-right-width: 0;
+  border-radius: 4px 0 0 4px;
+}
+
+.btn-split > .btn.caret {
+  border-right-width: 1px;
+  border-left-width: 0;
+  border-radius: 0 4px 4px 0;
+  padding: 0 3px;
+}
+
+.btn-split .chevron { display: block; }
+
+.btn-split-sep {
+  display: flex;
+  padding: 2px 0;
+  background: #353b45;
+  border-top: 1px solid #4b5059;
+  border-bottom: 1px solid #4b5059;
+}
+
+.btn-split-sep > span {
+  width: 1px;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.btn-split.disabled { opacity: 0.4; }
+.btn-split.disabled .btn { opacity: 1; }
 /* Pill. Active fills secondary and drops the border. sm is 10px on fill quaternary.
    <label class="pill" for="view-overview">Overview</label>
    <span class="pill sm">Plan <kbd>⇧Tab</kbd></span>

@@ -89,6 +89,30 @@ func TestMarkdown(t *testing.T) {
 	}
 }
 
+func TestSecondaryButton(t *testing.T) {
+	doc, err := markup.Parse(strings.NewReader(`
+<Row gap="8">
+  <button variant="secondary">Disable</button>
+  <button variant="secondary" dropdown="true">Uninstall</button>
+</Row>`))
+	if err != nil {
+		t.Fatal(err)
+	}
+	html := Page(doc)
+	for _, want := range []string{
+		`<button class="btn secondary" type="button">Disable</button>`,
+		`class="btn-split"`,
+		`class="btn-split-sep"`,
+		`aria-label="More Actions"`,
+		`class="chevron"`,
+		`>Uninstall</button>`,
+	} {
+		if !strings.Contains(html, want) {
+			t.Fatalf("missing %s\n%s", want, html)
+		}
+	}
+}
+
 func TestStackMarkup(t *testing.T) {
 	doc, err := markup.Parse(strings.NewReader(`<Stack gap="16"><h1>Release health</h1></Stack>`))
 	if err != nil {

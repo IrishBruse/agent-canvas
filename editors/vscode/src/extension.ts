@@ -151,8 +151,8 @@ function shellHtml(webview: vscode.Webview): string {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
   html, body { margin: 0; height: 100%; overflow: hidden; background: #181818; color: #f0f0f0; }
-  iframe { display: block; border: 0; width: 100%; height: 100%; background: #181818; }
-  #error { display: none; margin: 0; padding: 16px; white-space: pre-wrap; font: 13px/1.45 ui-monospace, monospace; color: #f85149; }
+  iframe { position: absolute; inset: 0; display: block; border: 0; width: 100%; height: 100%; background: #181818; }
+  #error { display: none; position: absolute; inset: 0; margin: 0; padding: 16px; overflow: auto; white-space: pre-wrap; font: 13px/1.45 ui-monospace, monospace; color: #f85149; }
   body.error iframe { display: none; }
   body.error #error { display: block; }
 </style>
@@ -169,10 +169,19 @@ function shellHtml(webview: vscode.Webview): string {
       return;
     }
     if (data.type === "html") {
-      const top = frame.contentWindow ? frame.contentWindow.scrollY : 0;
+      let top = 0;
+      try {
+        top = frame.contentWindow ? frame.contentWindow.scrollY : 0;
+      } catch {
+        top = 0;
+      }
       frame.onload = () => {
-        if (frame.contentWindow) {
-          frame.contentWindow.scrollTo(0, top);
+        try {
+          if (frame.contentWindow) {
+            frame.contentWindow.scrollTo(0, top);
+          }
+        } catch {
+          /* The frame is not readable until the next document loads. */
         }
       };
       document.body.classList.remove("error");

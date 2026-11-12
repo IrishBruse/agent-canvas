@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 )
 
-//go:embed SKILL.md
+//go:embed skills/agent-canvas/SKILL.md
 var skillMarkdown string
 
 // InstallSkill writes the embedded skill to ~/.agents/skills/agent-canvas/SKILL.md under home.

@@ -2,7 +2,7 @@
 install:
     go install ./cmd/agent-canvas
 
-# Write the embedded skill to ~/.agents/skills/agent-canvas/SKILL.md.
+# Write the discovery stub to ~/.agents/skills/agent-canvas/SKILL.md.
 install-skill:
     go run ./cmd/agent-canvas install-skill
 
@@ -12,6 +12,5 @@ install-extension:
     cd editors/vscode && npm install
     cd editors/vscode && npm test
     cd editors/vscode && npx --yes @vscode/vsce package --allow-missing-repository -o agent-canvas.vsix
-    if command -v cursor >/dev/null; then cursor --install-extension editors/vscode/agent-canvas.vsix --force; \
-    elif command -v code >/dev/null; then code --install-extension editors/vscode/agent-canvas.vsix --force; \
+    if command -v code >/dev/null; then code --install-extension editors/vscode/agent-canvas.vsix --force; \
     else echo "cursor or code is not on PATH" >&2; exit 1; fi

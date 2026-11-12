@@ -1,1 +1,5 @@
-<button variant="primary" disabled="false" onClick="save">Save</button>
+<Row gap="12" align="center">
+  <button variant="primary" disabled="false" onClick="save">Save</button>
+  <button variant="secondary" disabled="false" onClick="disable">Disable</button>
+  <button variant="secondary" dropdown="true" disabled="false" onClick="uninstall">Uninstall</button>
+</Row>

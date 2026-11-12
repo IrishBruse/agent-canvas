@@ -64,21 +64,28 @@ Open the HTML file in a browser.
 
 ## Skill
 
-The skill teaches an agent to write `.canvas` files and to run the CLI.
-The text is in [SKILL.md](./SKILL.md).
-The agent writes a file in your project.
-You run the CLI on that file.
-Any agent that reads the skill can do this work.
+The installed skill is a short stub.
+It tells the agent to load the workflow from the CLI.
+The CLI embeds that workflow, so the text matches this binary.
 
-The CLI contains the skill text.
-`agent-canvas install-skill` writes that text to `~/.agents/skills/agent-canvas/SKILL.md`.
+```bash
+agent-canvas skills get core
+agent-canvas skills list
+```
+
+`skills get core` prints the markup rules.
+`skills get core --ref <name>` prints one component or one example.
+`skills get core --full` prints every component and every example.
+
+The stub is [skills/agent-canvas/SKILL.md](./skills/agent-canvas/SKILL.md).
+The workflow is [skill-data/core/SKILL.md](./skill-data/core/SKILL.md).
+`agent-canvas install-skill` writes the stub to `~/.agents/skills/agent-canvas/SKILL.md`.
 
 ```bash
 agent-canvas install-skill
 ```
 
 In a clone, `just install-skill` runs `go run ./cmd/agent-canvas install-skill`.
-When the agent loads skills from this repo, point it at `SKILL.md`.
 
 ## Extension
 
@@ -168,12 +175,13 @@ Controls (`components/controls/`):
 
 - `button`, `IconButton`, `input`, `textarea`, `Checkbox`, `Toggle`, `select`
 
-Read [SKILL.md](./SKILL.md) for the agent markup rules.
+Read [skill-data/core/SKILL.md](./skill-data/core/SKILL.md) for the agent markup rules.
 
 ## Parts of this repo
 
 - `cmd/agent-canvas` — the CLI
-- `SKILL.md` — the skill
+- `skills/agent-canvas` — the discovery stub
+- `skill-data` — the skill text the CLI serves
 - `editors/vscode` — the VS Code and Cursor extension
 - `components/` — one file per component, grouped by folder
 - `examples/` — full pages

@@ -8,16 +8,33 @@ import (
 	"github.com/IrishBruse/agent-canvas/internal/markup"
 )
 
+const dropdownChevron = `<svg class="chevron" width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M7.976 10.072l4.357-4.357.62.618L8.284 11h-.618L3 6.333l.619-.618 4.357 4.357z"/></svg>`
+
 func renderButton(n *markup.Node) string {
 	className := "btn"
-	if v := n.Attr("variant"); v != "" && v != "secondary" {
-		className += " " + v
+	variant := n.Attr("variant")
+	if variant != "" && variant != "secondary" {
+		className += " " + variant
+	}
+	if variant == "secondary" {
+		className += " secondary"
 	}
 	disabled := ""
 	if n.Truthy("disabled") {
 		disabled = " disabled"
 	}
-	return fmt.Sprintf(`<button class="%s" type="button"%s>%s</button>`, className, disabled, renderKids(n, nil))
+	label := renderKids(n, nil)
+	if variant == "secondary" && n.Truthy("dropdown") {
+		split := "btn-split"
+		if disabled != "" {
+			split += " disabled"
+		}
+		return fmt.Sprintf(
+			`<span class="%s"><button class="%s" type="button"%s>%s</button><span class="btn-split-sep"><span></span></span><button class="%s caret" type="button" aria-label="More Actions"%s>%s</button></span>`,
+			split, className, disabled, label, className, disabled, dropdownChevron,
+		)
+	}
+	return fmt.Sprintf(`<button class="%s" type="button"%s>%s</button>`, className, disabled, label)
 }
 
 func renderPill(n *markup.Node) string {
